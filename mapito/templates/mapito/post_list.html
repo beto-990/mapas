@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <title>Simple Polygon</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 07;
+      }
+    </style>
+    
+         Por favor selecione arquivo que será lido:
+    <input type="file" id="txtfiletoread" /><br />
+    <div>Conteúdo do arquivo:</div>
+    <div id="filecontents">
+    </div>
+
+    <script>
+     cor="red";
+     cor2=22;
+     
+        window.onload = function () {
+            //Check the support for the File API support
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                var fileSelected = document.getElementById('txtfiletoread');
+                fileSelected.addEventListener('change', function (e) {
+                    //Set the extension for the file
+                    var fileExtension = /text.*/;
+                    //Get the file object
+                    var fileTobeRead = fileSelected.files[0];
+                    //Check of the extension match
+                    if (fileTobeRead.type.match(fileExtension)) {
+                        //Initialize the FileReader object to read the 2file
+                        var fileReader = new FileReader();
+                        fileReader.onload = function (e) {
+                            var fileContents = document.getElementById('filecontents');
+                            fileContents.innerText = fileReader.result;
+                            cor2 = fileReader.result;
+                        }
+                        fileReader.readAsText(fileTobeRead);
+                        cor = fileReader.readAsText(fileTobeRead);
+                    }
+                    else {
+                        alert("Por favor selecione arquivo texto");
+                    }
+
+                }, false);
+            }
+            else {
+                alert("Arquivo(s) não suportado(s)");
+            }
+        }
+
+   
+    
+
+    
+      let infoWindow;
+      // This example creates a simple polygon representing the Triangle.
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 5,
+          center: { lat: 24.886, lng: -70.268 },
+          mapTypeId: "terrain",
+        });
+        
+         var jsonData = {
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "properties": {
+      "stroke": "#555555",
+      "stroke-width": 2,
+      "stroke-opacity": 1
+    },
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          79.8046875,
+          45.583289756006316
+        ],
+        [
+          73.828125,
+          48.922499263758255
+        ],
+        [
+          72.421875,
+          46.07323062540838
+        ],
+        [
+          72.0703125,
+          42.553080288955826
+        ],
+        [
+          79.453125,
+          41.77131167976407
+        ],
+        [
+          78.046875,
+          37.71859032558816
+        ],
+        [
+          72.7734375,
+          34.016241889667015
+        ],
+        [
+          66.796875,
+          39.63953756436671
+        ],
+        [
+          66.4453125,
+          48.45835188280866
+        ],
+        [
+          74.1796875,
+          53.74871079689897
+        ],
+        [
+          55.1953125,
+          55.7765730186677
+        ],
+        [
+          49.92187499999999,
+          48.69096039092549
+        ],
+        [
+          50.625,
+          40.17887331434696
+        ]
+      ]
+    }
+  }]
+};
+        
+         map.data.addGeoJson(jsonData);
+        // Define the LatLng coordinates for the polygon's path.
+        const triangleCoords = [
+           { lat: 25.774, lng: -80.19 },
+          { lat: 18.466, lng: -66.118 },
+          { lat: 32.321, lng: -64.757 },
+          { lat: 25.774, lng: -80.19 },
+          {lat: 17.68, lng: 83.21},
+        ];
+
+          const triangle2Coords = [
+        {lat: 28.3000, lng: 83.900},
+         {lat: 28.1713, lng:  82.1278},
+         {lat: 27.370, lng: 78.480},
+         {lat: 17.68, lng: 83.21},
+        
+         ];
+        // Construct the polygon.
+        
+        
+        
+       const bermudaTriangle = new google.maps.Polygon({
+          paths: triangleCoords,
+          strokeColor: cor,
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: cor,
+          fillOpacity: 0.35,
+        });
+         const bermuda2Triangle = new google.maps.Polygon({
+          paths: triangle2Coords,
+          strokeColor: "#FF0000",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: cor,
+          fillOpacity: 0.35,
+        });
+        
+        const uluru = { lat:18.466, lng: -66.118 };
+    const marker = new google.maps.Marker({
+    position: uluru,
+    map,
+    title: "Uluru (Ayers Rock)",
+  });
+  
+ 
+  
+  
+    var contentString =
+    '<div id="content">' +
+    '<div id="siteNotice">' +
+    "</div>" +
+    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+    '<div id="bodyContent">' +
+    "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large </p>" +
+    "<p>central blablabla </p>" +
+    "<p>tipo bobobo </p>" +
+    "<p>população bibibib </p>" +
+    "</div>" +
+    "</div>";
+        
+        
+        bermudaTriangle.setMap(map);
+        bermuda2Triangle.setMap(map);
+        
+       const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+  });
+  
+  
+        
+
+        
+        bermudaTriangle.addListener("click", () => {
+       // map.setZoom(8);
+       if (cor2>50) {cor = 'black'} else {cor = 'yellow'}
+ 
+
+    bermudaTriangle.setOptions({strokeWeight: 2.0, fillColor: cor});
+    infowindow.open(map, marker);
+   
+    
+  });
+  
+  
+        
+  
+       
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+
+  </body>
+</html>>
