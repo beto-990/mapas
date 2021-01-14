@@ -9,6 +9,27 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4CGikOyTyLVbHTT1OOIegCD8Mj72c7gI&callback=initMap&libraries=&v=weekly" 
       defer
     ></script>
+
+{% for estado in estados %}
+    <div>
+	<p>populaçaõ: {{ estado.pop }}</p>
+	<div id="myvar">{{ estado.pop }}</div>       
+
+        <h2><a href="">{{ estado.sigla }}</a></h2>
+        <p>{{ estado.sigla|linebreaksbr }}</p>
+    </div>
+{% endfor %} 
+
+
+
+
+
+ 
+
+
+
+
+
     <style type="text/css">
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -32,6 +53,7 @@
     </div>
 
     <script>
+
      cor="red";
      cor2=22;
      
@@ -206,7 +228,7 @@
     "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large </p>" +
     "<p>central blablabla </p>" +
     "<p>tipo bobobo </p>" +
-    "<p>população bibibib </p>" +
+    "<p>população bibibib </p>" + cor2 +
     "</div>" +
     "</div>";
         
@@ -223,11 +245,20 @@
 
         
         bermudaTriangle.addListener("click", () => {
-       // map.setZoom(8);
-       if (cor2>50) {cor = 'black'} else {cor = 'yellow'}
+       // map.setZoom(8); (cor2>50)  
+
+      // var cod_produto_enviado = document.getElementById("corpo").getAttribute("data-produto");
+   //    alert("Produto passado: " + cod_produto_enviado);
+
+      var someVar = document.getElementById("myvar").innerHTML;
+      cor2 = someVar;
+
+       if (cor2>500) {cor = 'black'} else {cor = 'yellow'}
  
 
     bermudaTriangle.setOptions({strokeWeight: 2.0, fillColor: cor});
+    alert (someVar);
+  
     infowindow.open(map, marker);
    
     
